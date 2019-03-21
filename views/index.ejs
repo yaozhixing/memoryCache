@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>memory-cache Api数据缓存</title>
+    <script src="/public/jquery.min.js"></script>
+</head>
+<body>
+    <h1>memory-cache </h1>
+	<h4>首次访问api请求远程api接口，非首次请求取缓存，10s后清空缓存，继续请求远程api</h4>
+    <p>本文以：https://www.easy-mock.com/mock/5c7755477163345f2e2eccbd/xcx/getStoreLists  为例，查看notwork10秒内的请求时间！</p>
+    <p>这里是姓名: <span><%= name %></span></p>
+    <p>这里是性别: <span><%= sex %></span></p>
+    <p>这里是介绍: <span><%= content %></span></p>
+    <p>这里是日期: <span><%= date %></span></p>
+
+    <script>
+        $.ajax({
+            url: "getStoreLists",
+            type: "POST",
+            success: res =>{
+                console.log( res );
+            }
+        })
+    </script>
+ </body>
+ </html>
