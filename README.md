@@ -1,4 +1,4 @@
-# memory-cache api接口放入缓存技术
+# memory-cache api接口数据放入缓存技术
 
 > memory-cache 是node.js的简单内存缓存，存储于nodeJs服务器线程中另开一个缓存存储空间，但不影响nodejs线程影响。  npm官网有源码介绍  —— [memory-cache](https://www.npmjs.com/package/memory-cache)
 
