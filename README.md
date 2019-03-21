@@ -18,15 +18,54 @@
 - 如果服务器挂了，用户还有缓存数据请求；
 
 **缺点**
-- 内存能存储多长时间？
-- 能存储多大文件？
+- 内存能存储多长时间？（可以自定义缓存时间）
+- 能存储多大文件？（没测试庞大的数据文件）
+
+#### 安装方法
+- 1、git clone
+- 2、npm install	安装依赖
+- 3、node server.js	启动入口文件
+- 4、浏览器运行：  http://localhost:3001/
+- 5、打开调试模式，network 的 getStoreLists 这项，刷新页面，查看第一次访问的time， 然后再10秒内在刷新一次，看下time的值是多少，我这边的第一次197ms，缓存请求时间是2-5ms。观察cmd的请求日志。
 
 #### 使用方法
-1、git clone
-2、npm install	安装依赖
-3、node server.js	启动入口文件
-4、浏览器运行：  http://localhost:3001/
-4、打开调试模式，network 的 getStoreLists 这项，刷新页面，查看第一次访问的time， 然后再10秒内在刷新一次，看下time的值是多少，我这边的第一次408ms，缓存请求时间是2-5ms。观察cmd的请求日志。
+> api接口，是我个人的easymock模拟测试接口来测试的，方式post，返回6条模拟数据用来测试，大家可以自行修改！
+> 大家可以用postMan测试看看，https://www.easy-mock.com/mock/5c7755477163345f2e2eccbd/xcx/getStoreLists
+##### 定义中间件
+```
+//缓存中间件
+let cache = ( duration )=>{
+    return (req, res, next) =>{
+        //把url当做key存储
+        let key = req.originalUrl || req.url;
+        let cacheData = memoryCache.get(key);
+        if( cacheData ){
+            //内存中存在 => 取内存中的
+            console.log("来自缓存");
+            res.send(cacheData);
+            return;
+        }
+        else{
+            //无内存数据 => 缓存起来，继续下一个请求
+            request
+                .post(`https://www.easy-mock.com/mock/5c7755477163345f2e2eccbd/xcx${key}`)
+				.set('Content-Type', 'application/json')
+                .then(data =>{
+                    console.log("来自api接口");   //以对象形式存入
+                    memoryCache.put(key, data.body, duration * 1000);
+					res.send(data.body);
+                })
+          next();
+        }
+    }
+}
+```
+##### 调用中间件
+```
+server.post("/getStoreLists", cache(5), (req, res) => {
+	console.log("ok!");
+})
+```
 
 #### 同类方案解决内存缓存技术
 可能不是最好的内存缓存方案，也有其他技术可以实现：
