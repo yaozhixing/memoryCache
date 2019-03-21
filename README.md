@@ -66,6 +66,10 @@ server.post("/getStoreLists", cache(5), (req, res) => {
 	console.log("ok!");
 })
 ```
+#### 效果截图
+![enter image description here](http://po4ucl8b6.bkt.clouddn.com/post04_01.png)
+![enter image description here](http://po4ucl8b6.bkt.clouddn.com/post04_02.png)
+![enter image description here](http://po4ucl8b6.bkt.clouddn.com/post04_03.png)
 
 #### 同类方案解决内存缓存技术
 可能不是最好的内存缓存方案，也有其他技术可以实现：
