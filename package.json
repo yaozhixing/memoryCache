@@ -1,0 +1,26 @@
+{
+  "name": "expressCache",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yaozhixing/expressCache.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yaozhixing/expressCache/issues"
+  },
+  "homepage": "https://github.com/yaozhixing/expressCache#readme",
+  "devDependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-cache": "^0.1.1"
+  }
+}
